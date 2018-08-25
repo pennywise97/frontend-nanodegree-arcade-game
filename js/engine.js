@@ -9,7 +9,7 @@
  * drawn but that is not the case. What's really happening is the entire "scene"
  * is being drawn over and over, presenting the illusion of animation.
  *
- * This engine makes the canvas' context (ctx) object globally available to make 
+ * This engine makes the canvas' context (ctx) object globally available to make
  * writing app.js a little simpler to work with.
  */
 
@@ -18,15 +18,33 @@ var Engine = (function(global) {
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
-    var doc = global.document,
-        win = global.window,
-        canvas = doc.createElement('canvas'),
+    var canvas = document.createElement('canvas'),
         ctx = canvas.getContext('2d'),
-        lastTime;
+        lastTime,
+        updates = document.querySelector('.update'),
+        Score = document.getElementById('score'),
+		    Life = document.getElementById('life'),
+        Timer = document.getElementById('timer');
 
     canvas.width = 505;
     canvas.height = 606;
-    doc.body.appendChild(canvas);
+    document.body.appendChild(canvas);
+	  document.body.appendChild(Score);
+    document.body.appendChild(Life);
+    document.body.appendChild(Timer);
+    Score.innerHTML = `<strong>Score 🏆 :</strong> `
+    Life.innerHTML = `<strong>Life ❤️ : </strong> `
+    Timer.innerHTML = `<strong>Timer 🕗 : </strong>`
+  	Scoreupdate = document.createTextNode(player.win);
+  	Score.appendChild(Scoreupdate);
+  	Lifeupdate = document.createTextNode(player.life);
+    Life.appendChild(Lifeupdate);
+    Timerupdate = document.createTextNode(player.timer);
+    Timer.appendChild(Timerupdate);
+    canvas.width = 505;
+    canvas.height = 606;
+    document.body.appendChild(updates);
+    document.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -46,7 +64,9 @@ var Engine = (function(global) {
          */
         update(dt);
         render();
-
+        Scoreupdate.nodeValue = player.win;
+		    Lifeupdate.nodeValue = player.life;
+        Timerupdate.nodeValue =player.timer;
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
@@ -55,7 +75,7 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+        window.requestAnimationFrame(main);
     }
 
     /* This function does some initial setup that should only occur once,
@@ -66,6 +86,7 @@ var Engine = (function(global) {
         reset();
         lastTime = Date.now();
         main();
+
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -117,7 +138,7 @@ var Engine = (function(global) {
             numRows = 6,
             numCols = 5,
             row, col;
-        
+
         // Before drawing, clear existing canvas
         ctx.clearRect(0,0,canvas.width,canvas.height)
 
@@ -173,7 +194,7 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
     ]);
     Resources.onReady(init);
 
