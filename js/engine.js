@@ -33,7 +33,7 @@ var Engine = (function(global) {
     document.body.appendChild(Life);
     document.body.appendChild(Timer);
     Score.innerHTML = `<strong>Score 🏆 :</strong> `
-    Life.innerHTML = `<strong>Life ❤️ : </strong> `
+    Life.innerHTML = `<strong>Lives ❤️ : </strong> `
     Timer.innerHTML = `<strong>Timer 🕗 : </strong>`
   	Scoreupdate = document.createTextNode(player.win);
   	Score.appendChild(Scoreupdate);
